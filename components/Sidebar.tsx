@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 type NavItem = {
   label: string;
@@ -9,16 +10,6 @@ type NavItem = {
   icon: string;
   badge?: number;
 };
-
-function QGIcon({ size = 36 }: { size?: number }) {
-  return (
-    <svg viewBox="0 0 100 100" width={size} height={size} xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50" cy="50" r="44" fill="none" stroke="white" strokeWidth="6"/>
-      <text x="50" y="68" textAnchor="middle" fontFamily="Arial Black, Arial, sans-serif"
-        fontWeight="900" fontSize="52" fill="white" letterSpacing="-2">QG</text>
-    </svg>
-  );
-}
 
 export default function Sidebar({
   email,
@@ -44,29 +35,16 @@ export default function Sidebar({
       style={{ background: "linear-gradient(180deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%)", minHeight: "100vh" }}
     >
       {/* Marca d'água */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden opacity-5">
-        <svg viewBox="0 0 200 200" className="w-48 h-48">
-          {[10,30,50,70,90].map((r, i) => (
-            <circle key={i} cx="100" cy="100" r={r} fill="none" stroke="#4a86c8" strokeWidth="2" strokeDasharray="4 3"/>
-          ))}
-          <line x1="100" y1="10" x2="100" y2="190" stroke="#4a86c8" strokeWidth="1.5"/>
-          <line x1="100" y1="100" x2="160" y2="170" stroke="#4a86c8" strokeWidth="1.5"/>
-        </svg>
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden opacity-10">
+        <Image src="/marca-dagua.png" alt="" width={220} height={220} className="object-contain" />
       </div>
 
       {/* Logo */}
-      <div className={`relative flex items-center gap-3 px-4 py-5 border-b border-white/10 ${collapsed ? "justify-center px-2" : ""}`}>
-        <div className="shrink-0">
-          <QGIcon size={collapsed ? 32 : 36} />
-        </div>
-        {!collapsed && (
-          <div>
-            <div className="leading-none">
-              <span className="font-black text-white text-base tracking-wide">QUALI</span>
-              <span className="font-black text-[#8a8ab0] text-base tracking-wide">GUARD</span>
-            </div>
-            <div className="text-[9px] text-[#4a86c8] font-semibold tracking-widest mt-0.5">TECNOLOGIA</div>
-          </div>
+      <div className={`relative flex items-center gap-3 px-4 py-4 border-b border-white/10 ${collapsed ? "justify-center px-2" : ""}`}>
+        {collapsed ? (
+          <Image src="/logo-qg.png" alt="QG" width={36} height={36} className="object-contain" />
+        ) : (
+          <Image src="/logotipo-qualiguard.png" alt="QualiGuard Tecnologia" width={160} height={48} className="object-contain" style={{ filter: "brightness(0) invert(1)" }} />
         )}
         <button onClick={() => setCollapsed(!collapsed)}
           className="ml-auto text-white/30 hover:text-white transition-colors text-xs shrink-0"

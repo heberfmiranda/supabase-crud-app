@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
@@ -20,39 +21,32 @@ export default async function SignupPage({ searchParams }: { searchParams: Promi
 
   return (
     <main className="flex min-h-screen" style={{ background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)" }}>
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden opacity-5">
-        <svg viewBox="0 0 400 400" className="w-96 h-96">
-          {[50,90,130,170,190].map((r, i) => (
-            <circle key={i} cx="200" cy="200" r={r} fill="none" stroke="#4a86c8" strokeWidth="2" strokeDasharray="6 4"/>
-          ))}
-          <line x1="200" y1="10" x2="200" y2="390" stroke="#4a86c8" strokeWidth="2"/>
-          <line x1="200" y1="200" x2="320" y2="360" stroke="#4a86c8" strokeWidth="2"/>
-        </svg>
+      {/* Marca d'água */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden opacity-10">
+        <Image src="/marca-dagua.png" alt="" width={500} height={500} className="object-contain" />
       </div>
 
+      {/* Painel esquerdo */}
       <div className="hidden lg:flex lg:w-1/2 flex-col items-center justify-center p-12 relative">
-        <div className="w-24 h-24 mb-6">
-          <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_20px_rgba(74,134,200,0.5)]">
-            {[40,28,16].map((r, i) => (
-              <circle key={i} cx="50" cy="42" r={r} fill="none" stroke="#4a86c8" strokeWidth="3"
-                strokeDasharray={i === 0 ? "none" : "5 3"} opacity={1 - i * 0.2}/>
-            ))}
-            <line x1="50" y1="2" x2="50" y2="82" stroke="#4a86c8" strokeWidth="2.5" strokeLinecap="round"/>
-            <line x1="50" y1="42" x2="78" y2="76" stroke="#4a86c8" strokeWidth="2.5" strokeLinecap="round"/>
-          </svg>
-        </div>
-        <div className="text-center">
-          <div className="text-4xl font-black tracking-wide mb-1">
-            <span className="text-white">QUALI</span><span className="text-[#8a8ab0]">GUARD</span>
-          </div>
-          <div className="text-[#4a86c8] font-semibold tracking-widest text-sm mb-6">TECNOLOGIA</div>
-          <p className="text-white/50 text-sm italic">Abrindo suas portas para o futuro</p>
-        </div>
+        <Image
+          src="/logotipo-qualiguard.png"
+          alt="QualiGuard Tecnologia"
+          width={280}
+          height={100}
+          className="object-contain mb-6"
+          style={{ filter: "brightness(0) invert(1)" }}
+        />
+        <p className="text-white/50 text-sm italic">Abrindo suas portas para o futuro</p>
       </div>
 
+      {/* Formulário */}
       <div className="flex-1 flex items-center justify-center p-6 relative">
         <div className="w-full max-w-sm">
           <div className="rounded-2xl p-8" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", backdropFilter: "blur(20px)" }}>
+            {/* Logo mobile */}
+            <div className="flex justify-center mb-6 lg:hidden">
+              <Image src="/logo-qg.png" alt="QG" width={60} height={60} className="object-contain" style={{ filter: "brightness(0) invert(1)" }} />
+            </div>
             <h1 className="text-2xl font-bold text-white mb-1">Criar conta</h1>
             <p className="text-sm text-white/50 mb-6">Comece a usar o QualiGuard</p>
 
