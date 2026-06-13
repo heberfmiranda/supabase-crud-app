@@ -17,22 +17,22 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
   const { error } = await searchParams;
 
   return (
-    <main className="flex min-h-screen" style={{ background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)" }}>
-      {/* Marca d'água */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden opacity-10">
-        <Image src="/marca-dagua.png" alt="" width={500} height={500} className="object-contain" />
+    <main className="flex min-h-screen relative" style={{ background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)" }}>
+      {/* Marca d'água — canto superior esquerdo */}
+      <div className="absolute top-0 left-0 pointer-events-none overflow-hidden opacity-15" style={{ width: "55%", height: "100%" }}>
+        <Image src="/marca-dagua.png" alt="" fill className="object-cover object-left-top" />
       </div>
 
-      {/* Painel esquerdo */}
-      <div className="hidden lg:flex lg:w-1/2 flex-col items-center justify-center p-12 relative">
+      {/* Painel esquerdo — logo próximo ao form */}
+      <div className="hidden lg:flex lg:w-1/2 flex-col items-end justify-center pr-10 relative">
         <Image
           src="/logotipo-qualiguard.png"
           alt="QualiGuard Tecnologia"
-          width={280}
-          height={100}
-          className="object-contain mb-6"
+          width={260}
+          height={90}
+          className="object-contain"
         />
-        <p className="text-white/50 text-sm italic">Abrindo suas portas para o futuro</p>
+        <p className="text-white/50 text-sm italic mt-3 text-right">Abrindo suas portas para o futuro</p>
       </div>
 
       {/* Formulário */}
