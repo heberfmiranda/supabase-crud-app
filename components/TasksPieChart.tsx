@@ -22,8 +22,8 @@ export default function TasksPieChart({
   if (data.length === 0) return null;
 
   return (
-    <div className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-slate-200">
-      <h2 className="mb-2 text-sm font-semibold text-slate-700">Distribuição de tarefas</h2>
+    <div className="rounded-xl p-4" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
+      <h2 className="mb-2 text-xs font-semibold text-white/60 uppercase tracking-wider">Distribuição</h2>
       <ResponsiveContainer width="100%" height={220}>
         <PieChart>
           <Pie data={data} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label>

@@ -3,6 +3,10 @@
 import { useRef, useState, useTransition } from "react";
 import { createTask } from "@/app/dashboard/actions";
 
+const inputCls = "w-full rounded-lg px-3 py-2 text-sm text-white placeholder-white/30 outline-none transition-all focus:border-[#e91e8c]";
+const inputStyle = { background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)" };
+const selectCls = "flex-1 rounded-lg px-3 py-2 text-sm text-white outline-none";
+
 export default function TaskForm() {
   const formRef = useRef<HTMLFormElement>(null);
   const [error, setError] = useState<string | null>(null);
@@ -18,45 +22,44 @@ export default function TaskForm() {
   }
 
   return (
-    <form ref={formRef} action={onSubmit} className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
-      <h2 className="text-sm font-semibold text-slate-900">Nova tarefa</h2>
+    <form ref={formRef} action={onSubmit} className="rounded-xl p-4"
+      style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
+      <h2 className="text-xs font-semibold text-white/60 uppercase tracking-wider mb-3">Nova tarefa</h2>
 
-      {error && <p className="mt-3 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
+      {error && (
+        <p className="mb-3 rounded-lg px-3 py-2 text-sm text-red-400"
+          style={{ background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.2)" }}>{error}</p>
+      )}
 
-      <div className="mt-3 space-y-3">
-        <input name="title" required placeholder="Título da tarefa"
-          className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-900" />
-        <textarea name="description" rows={2} placeholder="Descrição (opcional)"
-          className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-900" />
-        <div className="flex gap-3">
-          <select name="status" defaultValue="todo"
-            className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-900">
+      <div className="space-y-3">
+        <input name="title" required placeholder="Título da tarefa" className={inputCls} style={inputStyle} />
+        <textarea name="description" rows={2} placeholder="Descrição (opcional)" className={inputCls} style={inputStyle} />
+        <div className="flex gap-2">
+          <select name="status" defaultValue="todo" className={selectCls} style={inputStyle}>
             <option value="todo">A fazer</option>
             <option value="in_progress">Em andamento</option>
             <option value="done">Concluída</option>
           </select>
-          <select name="priority" defaultValue="medium"
-            className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-900">
+          <select name="priority" defaultValue="medium" className={selectCls} style={inputStyle}>
             <option value="low">Prioridade baixa</option>
             <option value="medium">Prioridade média</option>
             <option value="high">Prioridade alta</option>
           </select>
         </div>
-        <div className="flex gap-3">
+        <div className="flex gap-2">
           <div className="flex-1">
-            <label className="text-xs text-slate-500 mb-1 block">Data e hora início (opcional)</label>
-            <input type="datetime-local" name="start_date"
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-900" />
+            <label className="text-[10px] text-white/40 uppercase tracking-wider block mb-1">Início</label>
+            <input type="datetime-local" name="start_date" className={inputCls} style={inputStyle} />
           </div>
           <div className="flex-1">
-            <label className="text-xs text-slate-500 mb-1 block">Data e hora fim (opcional)</label>
-            <input type="datetime-local" name="end_date"
-              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-900" />
+            <label className="text-[10px] text-white/40 uppercase tracking-wider block mb-1">Fim</label>
+            <input type="datetime-local" name="end_date" className={inputCls} style={inputStyle} />
           </div>
         </div>
         <button type="submit" disabled={isPending}
-          className="w-full rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 disabled:opacity-50">
-          {isPending ? "Adicionando..." : "Adicionar tarefa"}
+          className="w-full rounded-lg py-2 text-sm font-bold text-white transition-all hover:opacity-90 disabled:opacity-50"
+          style={{ background: "linear-gradient(135deg, #e91e8c, #c2185b)" }}>
+          {isPending ? "Adicionando..." : "+ Adicionar tarefa"}
         </button>
       </div>
     </form>
