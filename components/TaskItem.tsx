@@ -12,7 +12,7 @@ const priorityStyles: Record<string, { bg: string; color: string }> = {
 
 const statusStyles: Record<string, { bg: string; color: string }> = {
   todo:        { bg: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.5)" },
-  in_progress: { bg: "rgba(233,30,140,0.15)",  color: "#e91e8c" },
+  in_progress: { bg: "rgba(74,134,200,0.15)",  color: "#4a86c8" },
   done:        { bg: "rgba(34,197,94,0.15)",   color: "#22c55e" },
 };
 
@@ -86,7 +86,7 @@ export default function TaskItem({ task }: { task: Task }) {
   if (editing) {
     return (
       <form action={onUpdate} className="rounded-xl p-4"
-        style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(233,30,140,0.3)" }}>
+        style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(74,134,200,0.3)" }}>
         {error && <p className="mb-2 rounded-lg px-3 py-2 text-sm text-red-400" style={{ background: "rgba(239,68,68,0.1)" }}>{error}</p>}
         <input name="title" defaultValue={task.title} required className={inputCls} style={inputStyle} />
         <textarea name="description" defaultValue={task.description} rows={2} className={"mt-2 " + inputCls} style={inputStyle} />
@@ -115,7 +115,7 @@ export default function TaskItem({ task }: { task: Task }) {
         <div className="mt-3 flex gap-2">
           <button type="submit" disabled={isPending}
             className="rounded-lg px-3 py-1.5 text-xs font-bold text-white hover:opacity-90 disabled:opacity-50"
-            style={{ background: "linear-gradient(135deg, #e91e8c, #c2185b)" }}>
+            style={{ background: "linear-gradient(135deg, #4a86c8, #2d6ca8)" }}>
             Salvar
           </button>
           <button type="button" onClick={() => setEditing(false)}

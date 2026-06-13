@@ -218,7 +218,7 @@ export default function AdminDashboard({ users: initialUsers }: { users: User[] 
       {/* Ações em massa */}
       {selected2.size > 0 && (
         <div className="flex items-center gap-3 mb-3 rounded-lg px-4 py-2 text-sm"
-          style={{ background: "rgba(233,30,140,0.1)", border: "1px solid rgba(233,30,140,0.2)" }}>
+          style={{ background: "rgba(74,134,200,0.1)", border: "1px solid rgba(74,134,200,0.2)" }}>
           <span className="font-medium text-white/70">{selected2.size} selecionado(s)</span>
           <button onClick={() => bulkBlock(true)} className="rounded px-2 py-1 text-xs text-amber-400 hover:bg-amber-400/10">Bloquear</button>
           <button onClick={() => bulkBlock(false)} className="rounded px-2 py-1 text-xs text-green-400 hover:bg-green-400/10">Desbloquear</button>
@@ -253,13 +253,13 @@ export default function AdminDashboard({ users: initialUsers }: { users: User[] 
                 </td>
                 <td className="px-4 py-3 font-medium text-white">
                   {u.email}
-                  {u.role === "admin" && <span className="ml-2 text-[10px] rounded px-1 py-0.5" style={{ background: "rgba(233,30,140,0.2)", color: "#e91e8c" }}>admin</span>}
+                  {u.role === "admin" && <span className="ml-2 text-[10px] rounded px-1 py-0.5" style={{ background: "rgba(74,134,200,0.2)", color: "#4a86c8" }}>admin</span>}
                   {u.blocked && <span className="ml-2 text-[10px] rounded px-1 py-0.5" style={{ background: "rgba(239,68,68,0.2)", color: "#ef4444" }}>bloqueado</span>}
                 </td>
                 <td className="px-4 py-3 text-white/40 text-xs">{fmt(u.joined_at)}</td>
                 <td className="px-4 py-3">
                   <span className="rounded-full px-2 py-0.5 text-[10px] font-semibold"
-                    style={u.plan === "premium" ? { background: "rgba(233,30,140,0.15)", color: "#e91e8c" } : { background: "rgba(234,179,8,0.15)", color: "#eab308" }}>
+                    style={u.plan === "premium" ? { background: "rgba(74,134,200,0.15)", color: "#4a86c8" } : { background: "rgba(234,179,8,0.15)", color: "#eab308" }}>
                     {u.plan === "premium" ? "Premium" : "Gratuito"}
                   </span>
                 </td>
@@ -273,7 +273,7 @@ export default function AdminDashboard({ users: initialUsers }: { users: User[] 
                 </td>
                 <td className="px-4 py-3">
                   <div className="flex gap-2">
-                    <button onClick={() => openUser(u)} className="text-[10px] text-[#e91e8c] hover:underline">Detalhes</button>
+                    <button onClick={() => openUser(u)} className="text-[10px] text-[#4a86c8] hover:underline">Detalhes</button>
                     <button onClick={() => toggleBlock(u)} className={`text-[10px] hover:underline ${u.blocked ? "text-green-400" : "text-amber-400"}`}>
                       {u.blocked ? "Desbloquear" : "Bloquear"}
                     </button>
@@ -293,7 +293,7 @@ export default function AdminDashboard({ users: initialUsers }: { users: User[] 
       {selected && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(0,0,0,0.7)", backdropFilter: "blur(4px)" }}>
           <div className="rounded-2xl w-full max-w-lg max-h-[85vh] overflow-y-auto p-6"
-            style={{ background: "#1a1a2e", border: "1px solid rgba(233,30,140,0.3)", boxShadow: "0 0 40px rgba(233,30,140,0.15)" }}>
+            style={{ background: "#1a1a2e", border: "1px solid rgba(74,134,200,0.3)", boxShadow: "0 0 40px rgba(74,134,200,0.15)" }}>
             <div className="flex justify-between items-start mb-4">
               <div>
                 <h2 className="text-lg font-bold text-white">{selected.email}</h2>
@@ -322,7 +322,7 @@ export default function AdminDashboard({ users: initialUsers }: { users: User[] 
                 <div className="flex gap-2">
                   <button onClick={saveEdit} disabled={saving}
                     className="rounded-lg px-3 py-1.5 text-sm font-bold text-white hover:opacity-90 disabled:opacity-50"
-                    style={{ background: "linear-gradient(135deg, #e91e8c, #c2185b)" }}>
+                    style={{ background: "linear-gradient(135deg, #4a86c8, #2d6ca8)" }}>
                     {saving ? "Salvando..." : "Salvar"}
                   </button>
                   <button onClick={() => setEditMode(false)}
@@ -398,7 +398,7 @@ function StatCard({ label, value, color }: { label: string; value: number; color
   const colors: Record<string, string> = {
     slate: "#ffffff",
     amber: "#eab308",
-    violet: "#e91e8c",
+    violet: "#4a86c8",
     red: "#ef4444",
   };
   return (

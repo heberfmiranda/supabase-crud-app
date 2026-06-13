@@ -54,7 +54,7 @@ export default async function DashboardPage() {
             {[
               { label: "Total", value: total, color: "#ffffff" },
               { label: "A fazer", value: todo, color: "#8a8ab0" },
-              { label: "Em andamento", value: inProgress, color: "#e91e8c" },
+              { label: "Em andamento", value: inProgress, color: "#4a86c8" },
               { label: "Concluídas", value: done, color: "#22c55e" },
             ].map((s) => (
               <div key={s.label} className="rounded-xl p-4" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)" }}>
@@ -71,7 +71,7 @@ export default async function DashboardPage() {
               {canAddTask ? (
                 <TaskForm />
               ) : (
-                <div className="rounded-xl p-4 text-sm text-center" style={{ background: "rgba(233,30,140,0.08)", border: "1px solid rgba(233,30,140,0.2)", color: "#e91e8c" }}>
+                <div className="rounded-xl p-4 text-sm text-center" style={{ background: "rgba(74,134,200,0.08)", border: "1px solid rgba(74,134,200,0.2)", color: "#4a86c8" }}>
                   Limite de {FREE_TASK_LIMIT} tarefas pendentes atingido. Assine o Premium para continuar.
                 </div>
               )}

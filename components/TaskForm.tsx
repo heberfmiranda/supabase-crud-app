@@ -3,7 +3,7 @@
 import { useRef, useState, useTransition } from "react";
 import { createTask } from "@/app/dashboard/actions";
 
-const inputCls = "w-full rounded-lg px-3 py-2 text-sm text-white placeholder-white/30 outline-none transition-all focus:border-[#e91e8c]";
+const inputCls = "w-full rounded-lg px-3 py-2 text-sm text-white placeholder-white/30 outline-none transition-all focus:border-[#4a86c8]";
 const inputStyle = { background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)" };
 const selectCls = "flex-1 rounded-lg px-3 py-2 text-sm text-white outline-none";
 
@@ -58,7 +58,7 @@ export default function TaskForm() {
         </div>
         <button type="submit" disabled={isPending}
           className="w-full rounded-lg py-2 text-sm font-bold text-white transition-all hover:opacity-90 disabled:opacity-50"
-          style={{ background: "linear-gradient(135deg, #e91e8c, #c2185b)" }}>
+          style={{ background: "linear-gradient(135deg, #4a86c8, #2d6ca8)" }}>
           {isPending ? "Adicionando..." : "+ Adicionar tarefa"}
         </button>
       </div>

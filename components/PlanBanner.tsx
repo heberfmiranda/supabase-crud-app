@@ -16,7 +16,7 @@ export default function PlanBanner({ plan }: { plan: "free" | "premium" }) {
   if (plan === "premium") {
     return (
       <div className="rounded-xl px-4 py-3 text-sm font-medium flex items-center gap-2"
-        style={{ background: "linear-gradient(135deg, rgba(233,30,140,0.15), rgba(194,24,91,0.1))", border: "1px solid rgba(233,30,140,0.3)", color: "#e91e8c" }}>
+        style={{ background: "linear-gradient(135deg, rgba(74,134,200,0.15), rgba(194,24,91,0.1))", border: "1px solid rgba(74,134,200,0.3)", color: "#4a86c8" }}>
         ✨ Plano Premium ativo — tarefas ilimitadas e gráficos liberados
       </div>
     );
@@ -31,7 +31,7 @@ export default function PlanBanner({ plan }: { plan: "free" | "premium" }) {
       </div>
       <button onClick={handleUpgrade} disabled={loading}
         className="rounded-lg px-3 py-1.5 text-xs font-bold text-white transition-all hover:opacity-90 disabled:opacity-50 shrink-0 ml-4"
-        style={{ background: "linear-gradient(135deg, #e91e8c, #c2185b)" }}>
+        style={{ background: "linear-gradient(135deg, #4a86c8, #2d6ca8)" }}>
         {loading ? "Aguarde..." : "Assinar Premium — R$ 9,90/mês"}
       </button>
     </div>

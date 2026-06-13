@@ -21,23 +21,23 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden opacity-5">
         <svg viewBox="0 0 400 400" className="w-96 h-96">
           {[50,90,130,170,190].map((r, i) => (
-            <circle key={i} cx="200" cy="200" r={r} fill="none" stroke="#e91e8c" strokeWidth="2" strokeDasharray="6 4"/>
+            <circle key={i} cx="200" cy="200" r={r} fill="none" stroke="#4a86c8" strokeWidth="2" strokeDasharray="6 4"/>
           ))}
-          <line x1="200" y1="10" x2="200" y2="390" stroke="#e91e8c" strokeWidth="2"/>
-          <line x1="200" y1="200" x2="320" y2="360" stroke="#e91e8c" strokeWidth="2"/>
+          <line x1="200" y1="10" x2="200" y2="390" stroke="#4a86c8" strokeWidth="2"/>
+          <line x1="200" y1="200" x2="320" y2="360" stroke="#4a86c8" strokeWidth="2"/>
         </svg>
       </div>
 
       {/* Painel esquerdo */}
       <div className="hidden lg:flex lg:w-1/2 flex-col items-center justify-center p-12 relative">
         <div className="w-24 h-24 mb-6 relative">
-          <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_20px_rgba(233,30,140,0.5)]">
+          <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_20px_rgba(74,134,200,0.5)]">
             {[40,28,16].map((r, i) => (
-              <circle key={i} cx="50" cy="42" r={r} fill="none" stroke="#e91e8c" strokeWidth="3"
+              <circle key={i} cx="50" cy="42" r={r} fill="none" stroke="#4a86c8" strokeWidth="3"
                 strokeDasharray={i === 0 ? "none" : "5 3"} opacity={1 - i * 0.2}/>
             ))}
-            <line x1="50" y1="2" x2="50" y2="82" stroke="#e91e8c" strokeWidth="2.5" strokeLinecap="round"/>
-            <line x1="50" y1="42" x2="78" y2="76" stroke="#e91e8c" strokeWidth="2.5" strokeLinecap="round"/>
+            <line x1="50" y1="2" x2="50" y2="82" stroke="#4a86c8" strokeWidth="2.5" strokeLinecap="round"/>
+            <line x1="50" y1="42" x2="78" y2="76" stroke="#4a86c8" strokeWidth="2.5" strokeLinecap="round"/>
           </svg>
         </div>
         <div className="text-center">
@@ -45,7 +45,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
             <span className="text-white">QUALI</span>
             <span className="text-[#8a8ab0]">GUARD</span>
           </div>
-          <div className="text-[#e91e8c] font-semibold tracking-widest text-sm mb-6">PORTARIA REMOTA</div>
+          <div className="text-[#4a86c8] font-semibold tracking-widest text-sm mb-6">TECNOLOGIA</div>
           <p className="text-white/50 text-sm italic">Abrindo suas portas para o futuro</p>
         </div>
       </div>
@@ -76,14 +76,14 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
               </div>
               <button type="submit"
                 className="w-full rounded-lg px-4 py-2.5 text-sm font-bold text-white transition-all hover:opacity-90 active:scale-95"
-                style={{ background: "linear-gradient(135deg, #e91e8c, #c2185b)" }}>
+                style={{ background: "linear-gradient(135deg, #4a86c8, #2d6ca8)" }}>
                 Entrar
               </button>
             </form>
 
             <p className="mt-6 text-center text-sm text-white/40">
               Não tem conta?{" "}
-              <Link href="/signup" className="text-[#e91e8c] font-semibold hover:underline">Criar conta</Link>
+              <Link href="/signup" className="text-[#4a86c8] font-semibold hover:underline">Criar conta</Link>
             </p>
           </div>
         </div>
