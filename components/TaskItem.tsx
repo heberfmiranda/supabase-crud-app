@@ -16,13 +16,10 @@ const statusStyles: Record<string, string> = {
   done: "bg-green-100 text-green-700",
 };
 
-function fmtDueDate(due: string | null) {
-  if (!due) return null;
-  const d = new Date(due);
-  const now = new Date();
-  const overdue = d < now;
-  const str = d.toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
-  return { str, overdue };
+function fmtDate(iso: string | null) {
+  if (!iso) return null;
+  const d = new Date(iso);
+  return d.toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
 }
 
 function toLocalDatetimeValue(iso: string | null) {
@@ -55,7 +52,9 @@ export default function TaskItem({ task }: { task: Task }) {
     startTransition(async () => { await setStatus(task.id, value); });
   }
 
-  const due = fmtDueDate(task.due_date);
+  const startStr = fmtDate(task.start_date);
+  const endStr = fmtDate(task.end_date);
+  const overdue = task.end_date ? new Date(task.end_date) < new Date() && task.status !== "done" : false;
 
   if (editing) {
     return (
@@ -79,10 +78,17 @@ export default function TaskItem({ task }: { task: Task }) {
             <option value="high">Alta</option>
           </select>
         </div>
-        <div className="mt-2">
-          <label className="text-xs text-slate-500 mb-1 block">Data e hora de vencimento</label>
-          <input type="datetime-local" name="due_date" defaultValue={toLocalDatetimeValue(task.due_date)}
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-900" />
+        <div className="mt-2 flex gap-2">
+          <div className="flex-1">
+            <label className="text-xs text-slate-500 mb-1 block">Início</label>
+            <input type="datetime-local" name="start_date" defaultValue={toLocalDatetimeValue(task.start_date)}
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-900" />
+          </div>
+          <div className="flex-1">
+            <label className="text-xs text-slate-500 mb-1 block">Fim</label>
+            <input type="datetime-local" name="end_date" defaultValue={toLocalDatetimeValue(task.end_date)}
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-900" />
+          </div>
         </div>
         <div className="mt-3 flex gap-2">
           <button type="submit" disabled={isPending}
@@ -113,9 +119,14 @@ export default function TaskItem({ task }: { task: Task }) {
             <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${priorityStyles[task.priority]}`}>
               {PRIORITY_LABELS[task.priority]}
             </span>
-            {due && (
-              <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${due.overdue && task.status !== "done" ? "bg-red-100 text-red-700" : "bg-slate-100 text-slate-600"}`}>
-                {due.overdue && task.status !== "done" ? "⚠ " : "⏰ "}{due.str}
+            {startStr && (
+              <span className="rounded-full px-2 py-0.5 text-xs font-medium bg-slate-100 text-slate-600">
+                ▶ {startStr}
+              </span>
+            )}
+            {endStr && (
+              <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${overdue ? "bg-red-100 text-red-700" : "bg-slate-100 text-slate-600"}`}>
+                {overdue ? "⚠ " : "⏹ "}{endStr}
               </span>
             )}
           </div>

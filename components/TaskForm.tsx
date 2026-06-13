@@ -42,10 +42,17 @@ export default function TaskForm() {
             <option value="high">Prioridade alta</option>
           </select>
         </div>
-        <div>
-          <label className="text-xs text-slate-500 mb-1 block">Data e hora de vencimento (opcional)</label>
-          <input type="datetime-local" name="due_date"
-            className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-900" />
+        <div className="flex gap-3">
+          <div className="flex-1">
+            <label className="text-xs text-slate-500 mb-1 block">Data e hora início (opcional)</label>
+            <input type="datetime-local" name="start_date"
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-900" />
+          </div>
+          <div className="flex-1">
+            <label className="text-xs text-slate-500 mb-1 block">Data e hora fim (opcional)</label>
+            <input type="datetime-local" name="end_date"
+              className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-900" />
+          </div>
         </div>
         <button type="submit" disabled={isPending}
           className="w-full rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 disabled:opacity-50">

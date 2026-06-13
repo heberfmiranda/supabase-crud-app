@@ -27,14 +27,16 @@ export async function createTask(formData: FormData) {
     }
   }
 
-  const dueDateRaw = String(formData.get("due_date") ?? "").trim();
+  const startDate = String(formData.get("start_date") ?? "").trim();
+  const endDate = String(formData.get("end_date") ?? "").trim();
   const { error } = await supabase.from("tasks").insert({
     user_id: user.id,
     title,
     description: String(formData.get("description") ?? ""),
     status: String(formData.get("status") ?? "todo"),
     priority: String(formData.get("priority") ?? "medium"),
-    due_date: dueDateRaw || null,
+    start_date: startDate || null,
+    end_date: endDate || null,
   });
 
   if (error) return { error: error.message };
@@ -54,7 +56,8 @@ export async function updateTask(id: string, formData: FormData) {
   if (!title) return { error: "O título é obrigatório" };
 
   // O RLS já garante que só o dono atualiza; o filtro é defesa extra.
-  const dueDateRaw = String(formData.get("due_date") ?? "").trim();
+  const startDate = String(formData.get("start_date") ?? "").trim();
+  const endDate = String(formData.get("end_date") ?? "").trim();
   const { error } = await supabase
     .from("tasks")
     .update({
@@ -62,7 +65,8 @@ export async function updateTask(id: string, formData: FormData) {
       description: String(formData.get("description") ?? ""),
       status: String(formData.get("status") ?? "todo"),
       priority: String(formData.get("priority") ?? "medium"),
-      due_date: dueDateRaw || null,
+      start_date: startDate || null,
+      end_date: endDate || null,
     })
     .eq("id", id)
     .eq("user_id", user.id);
