@@ -18,9 +18,9 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
 
   return (
     <main className="flex min-h-screen relative" style={{ background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)" }}>
-      {/* Marca d'água — canto superior esquerdo */}
-      <div className="absolute top-0 left-0 pointer-events-none overflow-hidden opacity-15" style={{ width: "55%", height: "100%" }}>
-        <Image src="/marca-dagua.png" alt="" fill className="object-cover object-left-top" />
+      {/* Marca d'água — canto superior esquerdo, tamanho original */}
+      <div className="absolute top-0 left-0 pointer-events-none opacity-15">
+        <Image src="/marca-dagua.png" alt="" width={420} height={420} className="object-contain" />
       </div>
 
       {/* Painel esquerdo — logo próximo ao form */}

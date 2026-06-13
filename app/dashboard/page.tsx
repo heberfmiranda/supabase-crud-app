@@ -3,7 +3,6 @@ import { createClient } from "@/lib/supabase/server";
 import { getUserPlan, FREE_TASK_LIMIT } from "@/lib/subscription";
 import { isAdmin } from "@/lib/admin";
 import Sidebar from "@/components/Sidebar";
-import AnimatedBackground from "@/components/AnimatedBackground";
 import TaskForm from "@/components/TaskForm";
 import TaskItem from "@/components/TaskItem";
 import PlanBanner from "@/components/PlanBanner";
@@ -31,8 +30,7 @@ export default async function DashboardPage() {
     <div className="flex min-h-screen" style={{ background: "#0d1117" }}>
       <Sidebar email={user?.email ?? ""} plan={plan} isAdmin={admin} activeItem="/dashboard" />
 
-      <div className="flex-1 flex flex-col min-w-0 relative">
-        <AnimatedBackground />
+      <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
         <header className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: "rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.02)" }}>
           <div>

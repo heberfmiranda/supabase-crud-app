@@ -34,11 +34,6 @@ export default function Sidebar({
       className={`relative flex flex-col transition-all duration-300 ${collapsed ? "w-16" : "w-60"}`}
       style={{ background: "linear-gradient(180deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%)", minHeight: "100vh" }}
     >
-      {/* Marca d'água */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-10">
-        <Image src="/marca-dagua.png" alt="" fill className="object-cover object-left" />
-      </div>
-
       {/* Logo */}
       <div className={`relative flex items-center gap-3 px-4 py-4 border-b border-white/10 ${collapsed ? "justify-center px-2" : ""}`}>
         {collapsed ? (
