@@ -16,18 +16,33 @@ const statusStyles: Record<string, string> = {
   done: "bg-green-100 text-green-700",
 };
 
+// Formata sem usar Date para evitar qualquer conversão de fuso
 function fmtDate(iso: string | null) {
   if (!iso) return null;
-  // Trata como horário local sem conversão de fuso
-  const d = new Date(iso.replace(" ", "T") + (iso.includes("+") || iso.includes("Z") ? "" : ""));
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return `${pad(d.getUTCDate())}/${pad(d.getUTCMonth() + 1)}/${d.getUTCFullYear()} ${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}`;
+  const s = iso.replace("T", " ").slice(0, 16); // "2026-06-13 16:10"
+  const [date, time] = s.split(" ");
+  const [year, month, day] = date.split("-");
+  return `${day}/${month}/${year} ${time}`;
 }
 
 function toLocalDatetimeValue(iso: string | null) {
   if (!iso) return "";
-  // Remove timezone info e usa o valor exato armazenado (sem conversão)
-  return iso.slice(0, 16).replace(" ", "T");
+  return iso.replace(" ", "T").slice(0, 16); // "2026-06-13T16:10"
+}
+
+// Gera URL do Google Calendar com horário local (sem conversão UTC)
+function googleCalendarUrl(title: string, description: string, start: string | null, end: string | null) {
+  if (!start) return null;
+  const toGCal = (iso: string) => iso.replace(" ", "T").slice(0, 16).replace(/[-:T]/g, "").padEnd(15, "0");
+  const startFmt = toGCal(start);
+  const endFmt = end ? toGCal(end) : toGCal(start).slice(0, 8) + "T" + String(Number(toGCal(start).slice(9, 11)) + 1).padStart(2, "0") + "0000";
+  const params = new URLSearchParams({
+    action: "TEMPLATE",
+    text: title,
+    details: description || "",
+    dates: `${startFmt}/${endFmt}`,
+  });
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
 }
 
 export default function TaskItem({ task }: { task: Task }) {
@@ -55,8 +70,9 @@ export default function TaskItem({ task }: { task: Task }) {
 
   const startStr = fmtDate(task.start_date);
   const endStr = fmtDate(task.end_date);
+  const gcalUrl = googleCalendarUrl(task.title, task.description, task.start_date, task.end_date);
   const overdue = task.end_date
-    ? new Date(task.end_date.replace(" ", "T")) < new Date()  && task.status !== "done"
+    ? new Date(task.end_date.replace(" ", "T")) < new Date() && task.status !== "done"
     : false;
 
   if (editing) {
@@ -141,6 +157,12 @@ export default function TaskItem({ task }: { task: Task }) {
             <option value="in_progress">Em andamento</option>
             <option value="done">Concluída</option>
           </select>
+          {gcalUrl && (
+            <a href={gcalUrl} target="_blank" rel="noreferrer"
+              className="rounded-lg px-2 py-1 text-sm text-blue-500 hover:bg-blue-50" title="Adicionar ao Google Calendar">
+              📅
+            </a>
+          )}
           <button onClick={() => setEditing(true)} className="rounded-lg px-2 py-1 text-sm text-slate-500 hover:bg-slate-100" title="Editar">✎</button>
           <button onClick={onDelete} disabled={isPending} className="rounded-lg px-2 py-1 text-sm text-red-500 hover:bg-red-50 disabled:opacity-50" title="Excluir">🗑</button>
         </div>
