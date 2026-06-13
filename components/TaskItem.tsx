@@ -31,18 +31,23 @@ function toLocalDatetimeValue(iso: string | null) {
 }
 
 // Gera URL do Google Calendar com horário local (sem conversão UTC)
+function toGCalFormat(iso: string) {
+  // "2026-06-13 16:10:00" -> "20260613T161000"
+  return iso.replace(" ", "T").slice(0, 16)
+    .split("").filter((c) => c !== "-" && c !== ":").join("") + "00";
+}
+
 function googleCalendarUrl(title: string, description: string, start: string | null, end: string | null) {
   if (!start) return null;
-  const toGCal = (iso: string) => iso.replace(" ", "T").slice(0, 16).replace(/[-:T]/g, "").padEnd(15, "0");
-  const startFmt = toGCal(start);
-  const endFmt = end ? toGCal(end) : toGCal(start).slice(0, 8) + "T" + String(Number(toGCal(start).slice(9, 11)) + 1).padStart(2, "0") + "0000";
+  const startFmt = toGCalFormat(start);
+  const endFmt = end ? toGCalFormat(end) : startFmt;
   const params = new URLSearchParams({
     action: "TEMPLATE",
     text: title,
     details: description || "",
-    dates: `${startFmt}/${endFmt}`,
+    dates: startFmt + "/" + endFmt,
   });
-  return `https://calendar.google.com/calendar/render?${params.toString()}`;
+  return "https://calendar.google.com/calendar/render?" + params.toString();
 }
 
 export default function TaskItem({ task }: { task: Task }) {
