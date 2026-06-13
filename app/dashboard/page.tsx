@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { getUserPlan, FREE_TASK_LIMIT } from "@/lib/subscription";
+import { isAdmin } from "@/lib/admin";
 import TaskForm from "@/components/TaskForm";
 import TaskItem from "@/components/TaskItem";
 import PlanBanner from "@/components/PlanBanner";
@@ -10,7 +11,7 @@ export default async function DashboardPage() {
   const supabase = await createClient();
 
   const { data: { user } } = await supabase.auth.getUser();
-  const plan = await getUserPlan();
+  const [plan, admin] = await Promise.all([getUserPlan(), isAdmin()]);
 
   const { data: tasks } = await supabase
     .from("tasks")
@@ -34,11 +35,18 @@ export default async function DashboardPage() {
           <h1 className="text-2xl font-bold text-slate-900">Minhas tarefas</h1>
           <p className="text-sm text-slate-500">{user?.email}</p>
         </div>
-        <form action="/auth/signout" method="post">
-          <button className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-white">
-            Sair
-          </button>
-        </form>
+        <div className="flex items-center gap-2">
+          {admin && (
+            <a href="/admin" className="rounded-lg bg-violet-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-violet-700">
+              Painel Admin
+            </a>
+          )}
+          <form action="/auth/signout" method="post">
+            <button className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-white">
+              Sair
+            </button>
+          </form>
+        </div>
       </header>
 
       {/* Banner de plano */}
