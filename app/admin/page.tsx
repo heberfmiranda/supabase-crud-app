@@ -8,7 +8,7 @@ export default async function AdminPage() {
   // Busca todos os usuários com suas assinaturas via service role (bypassa RLS)
   const { data: profiles } = await supabaseAdmin
     .from("profiles")
-    .select("id, email, role, created_at");
+    .select("id, email, role, blocked, created_at");
 
   const { data: subscriptions } = await supabaseAdmin
     .from("subscriptions")
@@ -20,6 +20,7 @@ export default async function AdminPage() {
       id: p.id,
       email: p.email,
       role: p.role,
+      blocked: p.blocked ?? false,
       joined_at: p.created_at,
       plan: sub?.plan ?? "free",
       subscription_status: sub?.status ?? null,
