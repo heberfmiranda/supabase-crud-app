@@ -1,3 +1,4 @@
+import { unstable_noStore as noStore } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { getUserPlan, FREE_TASK_LIMIT } from "@/lib/subscription";
 import { isAdmin } from "@/lib/admin";
@@ -8,6 +9,7 @@ import TasksPieChart from "@/components/TasksPieChart";
 import type { Task } from "@/components/types";
 
 export default async function DashboardPage() {
+  noStore();
   const supabase = await createClient();
 
   const { data: { user } } = await supabase.auth.getUser();
