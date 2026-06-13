@@ -18,15 +18,16 @@ const statusStyles: Record<string, string> = {
 
 function fmtDate(iso: string | null) {
   if (!iso) return null;
-  const d = new Date(iso);
-  return d.toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
+  // Trata como horário local sem conversão de fuso
+  const d = new Date(iso.replace(" ", "T") + (iso.includes("+") || iso.includes("Z") ? "" : ""));
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${pad(d.getUTCDate())}/${pad(d.getUTCMonth() + 1)}/${d.getUTCFullYear()} ${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}`;
 }
 
 function toLocalDatetimeValue(iso: string | null) {
   if (!iso) return "";
-  const d = new Date(iso);
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  // Remove timezone info e usa o valor exato armazenado (sem conversão)
+  return iso.slice(0, 16).replace(" ", "T");
 }
 
 export default function TaskItem({ task }: { task: Task }) {
@@ -54,7 +55,9 @@ export default function TaskItem({ task }: { task: Task }) {
 
   const startStr = fmtDate(task.start_date);
   const endStr = fmtDate(task.end_date);
-  const overdue = task.end_date ? new Date(task.end_date) < new Date() && task.status !== "done" : false;
+  const overdue = task.end_date
+    ? new Date(task.end_date.replace(" ", "T")) < new Date()  && task.status !== "done"
+    : false;
 
   if (editing) {
     return (
