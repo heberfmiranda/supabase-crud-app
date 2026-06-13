@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
   }
 
   if (event.type === "customer.subscription.deleted" || event.type === "customer.subscription.updated") {
-    const subscription = event.data.object as { id: string; status: string; current_period_end: number };
+    const subscription = event.data.object as unknown as { id: string; status: string; current_period_end: number };
     const { data } = await supabaseAdmin
       .from("subscriptions")
       .select("user_id")
