@@ -35,8 +35,8 @@ export default function Sidebar({
       style={{ background: "linear-gradient(180deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%)", minHeight: "100vh" }}
     >
       {/* Marca d'água */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden opacity-10">
-        <Image src="/marca-dagua.png" alt="" width={220} height={220} className="object-contain" />
+      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-10">
+        <Image src="/marca-dagua.png" alt="" fill className="object-cover object-left" />
       </div>
 
       {/* Logo */}
@@ -44,7 +44,7 @@ export default function Sidebar({
         {collapsed ? (
           <Image src="/logo-qg.png" alt="QG" width={36} height={36} className="object-contain" />
         ) : (
-          <Image src="/logotipo-qualiguard.png" alt="QualiGuard Tecnologia" width={160} height={48} className="object-contain" style={{ filter: "brightness(0) invert(1)" }} />
+          <Image src="/logotipo-qualiguard.png" alt="QualiGuard Tecnologia" width={160} height={48} className="object-contain" />
         )}
         <button onClick={() => setCollapsed(!collapsed)}
           className="ml-auto text-white/30 hover:text-white transition-colors text-xs shrink-0"

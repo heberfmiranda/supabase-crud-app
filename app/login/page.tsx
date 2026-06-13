@@ -31,7 +31,6 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
           width={280}
           height={100}
           className="object-contain mb-6"
-          style={{ filter: "brightness(0) invert(1)" }}
         />
         <p className="text-white/50 text-sm italic">Abrindo suas portas para o futuro</p>
       </div>
@@ -42,7 +41,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
           <div className="rounded-2xl p-8" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", backdropFilter: "blur(20px)" }}>
             {/* Logo mobile */}
             <div className="flex justify-center mb-6 lg:hidden">
-              <Image src="/logo-qg.png" alt="QG" width={60} height={60} className="object-contain" style={{ filter: "brightness(0) invert(1)" }} />
+              <Image src="/logo-qg.png" alt="QG" width={60} height={60} className="object-contain" />
             </div>
             <h1 className="text-2xl font-bold text-white mb-1">Entrar</h1>
             <p className="text-sm text-white/50 mb-6">Acesse seu painel QualiGuard</p>
