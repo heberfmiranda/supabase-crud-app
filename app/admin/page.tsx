@@ -1,19 +1,16 @@
 import { redirect } from "next/navigation";
-import { isAdmin } from "@/lib/admin";
-import { createClient } from "@/lib/supabase/server";
+import { isAdmin, supabaseAdmin } from "@/lib/admin";
 import AdminDashboard from "@/components/AdminDashboard";
 
 export default async function AdminPage() {
   if (!(await isAdmin())) redirect("/dashboard");
 
-  const supabase = await createClient();
-
-  // Busca todos os usuários com suas assinaturas
-  const { data: profiles } = await supabase
+  // Busca todos os usuários com suas assinaturas via service role (bypassa RLS)
+  const { data: profiles } = await supabaseAdmin
     .from("profiles")
     .select("id, email, role, created_at");
 
-  const { data: subscriptions } = await supabase
+  const { data: subscriptions } = await supabaseAdmin
     .from("subscriptions")
     .select("*");
 
