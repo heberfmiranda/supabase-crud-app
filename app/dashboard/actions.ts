@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
+import { getUserPlan, FREE_TASK_LIMIT } from "@/lib/subscription";
 
 // ---- CREATE ----------------------------------------------------------
 export async function createTask(formData: FormData) {
@@ -13,6 +14,18 @@ export async function createTask(formData: FormData) {
 
   const title = String(formData.get("title") ?? "").trim();
   if (!title) return { error: "O título é obrigatório" };
+
+  const plan = await getUserPlan();
+  if (plan === "free") {
+    const { count } = await supabase
+      .from("tasks")
+      .select("*", { count: "exact", head: true })
+      .eq("user_id", user.id)
+      .in("status", ["todo", "in_progress"]);
+    if ((count ?? 0) >= FREE_TASK_LIMIT) {
+      return { error: `Limite de ${FREE_TASK_LIMIT} tarefas pendentes atingido. Assine o Premium para continuar.` };
+    }
+  }
 
   const { error } = await supabase.from("tasks").insert({
     user_id: user.id,

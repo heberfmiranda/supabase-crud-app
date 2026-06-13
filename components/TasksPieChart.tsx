@@ -1,0 +1,40 @@
+"use client";
+
+import { PieChart, Pie, Cell, Legend, Tooltip, ResponsiveContainer } from "recharts";
+
+const COLORS = ["#64748b", "#3b82f6", "#22c55e"];
+
+export default function TasksPieChart({
+  todo,
+  inProgress,
+  done,
+}: {
+  todo: number;
+  inProgress: number;
+  done: number;
+}) {
+  const data = [
+    { name: "A fazer", value: todo },
+    { name: "Em andamento", value: inProgress },
+    { name: "Concluídas", value: done },
+  ].filter((d) => d.value > 0);
+
+  if (data.length === 0) return null;
+
+  return (
+    <div className="rounded-xl bg-white p-4 shadow-sm ring-1 ring-slate-200">
+      <h2 className="mb-2 text-sm font-semibold text-slate-700">Distribuição de tarefas</h2>
+      <ResponsiveContainer width="100%" height={220}>
+        <PieChart>
+          <Pie data={data} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label>
+            {data.map((_, i) => (
+              <Cell key={i} fill={COLORS[i % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip />
+          <Legend />
+        </PieChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}

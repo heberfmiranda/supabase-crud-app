@@ -1,14 +1,16 @@
 import { createClient } from "@/lib/supabase/server";
+import { getUserPlan, FREE_TASK_LIMIT } from "@/lib/subscription";
 import TaskForm from "@/components/TaskForm";
 import TaskItem from "@/components/TaskItem";
+import PlanBanner from "@/components/PlanBanner";
+import TasksPieChart from "@/components/TasksPieChart";
 import type { Task } from "@/components/types";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { data: { user } } = await supabase.auth.getUser();
+  const plan = await getUserPlan();
 
   const { data: tasks } = await supabase
     .from("tasks")
@@ -20,6 +22,9 @@ export default async function DashboardPage() {
   const done = list.filter((t) => t.status === "done").length;
   const inProgress = list.filter((t) => t.status === "in_progress").length;
   const todo = list.filter((t) => t.status === "todo").length;
+
+  const pendingCount = todo + inProgress;
+  const canAddTask = plan === "premium" || pendingCount < FREE_TASK_LIMIT;
 
   return (
     <main className="mx-auto max-w-3xl p-4 sm:p-6">
@@ -36,17 +41,36 @@ export default async function DashboardPage() {
         </form>
       </header>
 
+      {/* Banner de plano */}
+      <section className="mt-4">
+        <PlanBanner plan={plan} />
+      </section>
+
       {/* Estatísticas */}
-      <section className="mt-6 grid grid-cols-4 gap-3">
+      <section className="mt-4 grid grid-cols-4 gap-3">
         <Stat label="Total" value={total} />
         <Stat label="A fazer" value={todo} />
         <Stat label="Em andamento" value={inProgress} />
         <Stat label="Concluídas" value={done} />
       </section>
 
+      {/* Gráfico — apenas Premium */}
+      {plan === "premium" && (
+        <section className="mt-4">
+          <TasksPieChart todo={todo} inProgress={inProgress} done={done} />
+        </section>
+      )}
+
       {/* Formulário */}
       <section className="mt-6">
-        <TaskForm />
+        {canAddTask ? (
+          <TaskForm />
+        ) : (
+          <div className="rounded-xl bg-amber-50 p-4 text-center text-sm text-amber-700 ring-1 ring-amber-200">
+            Você atingiu o limite de {FREE_TASK_LIMIT} tarefas pendentes do plano gratuito.
+            Assine o Premium para continuar adicionando tarefas.
+          </div>
+        )}
       </section>
 
       {/* Lista */}
