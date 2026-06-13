@@ -390,7 +390,7 @@ export default function AdminDashboard({ users: initialUsers }: { users: User[] 
           </div>
         </div>
       )}
-    </main>
+    </div>
   );
 }
 
